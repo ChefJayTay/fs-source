@@ -1,0 +1,30 @@
+.
+├── config
+│   └── obs_config.json
+├── logs
+├── tests
+├── CURRENT_SETUP.md
+├── MODES.md
+├── OVERVIEW.md
+├── QUICKSTART.md
+├── README.md
+├── SAME_SOURCE_GUIDE.md
+├── WHICH_MODE.md
+├── fs-source.service
+├── fs_source.py
+├── fs_source_daemon.py
+├── fs_source_native.py
+├── install_service.sh
+├── requirements.txt
+├── run.sh
+├── run_daemon.sh
+├── run_native.sh
+├── setup.py
+├── status.sh
+├── test_camera.py
+├── test_local_camera.py
+├── test_obs_connection.py
+├── tree.txt
+└── uninstall_service.sh
+
+4 directories, 24 files
