@@ -10,6 +10,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from obswebsocket import obsws, requests as obs_requests
+from obs_scene_visibility import set_source_visibility_global as set_obs_source_visibility_global
 import logging
 import sys
 from pathlib import Path
@@ -95,60 +96,14 @@ class FaceDetectionSwitcher:
         return False
     
     def set_source_visibility_global(self, source_name, visible, exclude_scenes=None):
-        """Set OBS source visibility across all scenes (with optional exclusions)"""
-        if not self.obs_ws:
-            return False
-        
-        if exclude_scenes is None:
-            exclude_scenes = []
-        
-        try:
-            if not source_name:
-                logger.warning("Source name not configured")
-                return False
-            
-            # Get list of all scenes
-            scenes_response = self.obs_ws.call(obs_requests.GetSceneList())
-            all_scenes = scenes_response.getScenes()
-            
-            scenes_modified = 0
-            
-            for scene in all_scenes:
-                scene_name = scene['sceneName']
-                
-                # Skip excluded scenes
-                if scene_name in exclude_scenes:
-                    logger.debug(f"Skipping excluded scene: {scene_name}")
-                    continue
-                
-                # Get scene items
-                try:
-                    scene_items = self.obs_ws.call(obs_requests.GetSceneItemList(sceneName=scene_name))
-                    
-                    for item in scene_items.getSceneItems():
-                        if item['sourceName'] == source_name:
-                            self.obs_ws.call(obs_requests.SetSceneItemEnabled(
-                                sceneName=scene_name,
-                                sceneItemId=item['sceneItemId'],
-                                sceneItemEnabled=visible
-                            ))
-                            logger.debug(f"Set {source_name} to {visible} in '{scene_name}'")
-                            scenes_modified += 1
-                except Exception as e:
-                    logger.debug(f"Could not modify {source_name} in scene '{scene_name}': {e}")
-                    continue
-            
-            if scenes_modified > 0:
-                excluded_note = f" (excluded: {', '.join(exclude_scenes)})" if exclude_scenes else ""
-                logger.info(f"Set {source_name} visibility to {visible} in {scenes_modified} scene(s){excluded_note}")
-                return True
-            else:
-                logger.warning(f"Source '{source_name}' not found in any scenes")
-                return False
-                
-        except Exception as e:
-            logger.error(f"Failed to toggle OBS source globally: {e}")
-            return False
+        """Set OBS source visibility across all scenes and canvases."""
+        return set_obs_source_visibility_global(
+            self.obs_ws,
+            source_name,
+            visible,
+            logger,
+            exclude_scenes=exclude_scenes,
+        )
     
     def run(self):
         """Main execution loop"""

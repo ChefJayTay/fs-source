@@ -18,7 +18,7 @@ Perfect for cooking & maker streams, tutorials, product demos, or any stream whe
 
 ## ✨ What It Does
 
-**You look at camera → Your chosen source appears across ALL scenes**  
+**You look at camera → Your chosen source appears across ALL scenes and canvases**<br>
 **You look away → Source disappears (except in your monitoring scene)**
 
 ### 🎬 Real-World Example
@@ -42,7 +42,8 @@ You're cooking and have an overhead 180° camera watching you. When you look up 
 <td width="50%">
 
 ### 🌍 Global Control
-- **Works across ALL scenes** simultaneously
+- **Works across ALL scenes and canvases** simultaneously
+- Supports Aitum horizontal and vertical canvases
 - Switch scenes freely - automation follows you
 - Smart exclusions for detection scenes
 
@@ -158,7 +159,9 @@ graph LR
 ```
 
 ### Global Scene Control
-Unlike traditional OBS automation that only works in one scene, FS Source controls source visibility **across all your scenes**. Switch scenes freely - the automation follows you.
+Unlike traditional OBS automation that only works in one scene, FS Source controls source visibility **across all your scenes and canvases**, including Aitum vertical canvases. Switch scenes freely - the automation follows you.
+
+> **Aitum requirement:** Multi-canvas discovery requires obs-websocket 5.7 or newer. On older versions, FS Source continues to control the main OBS canvas only.
 
 ---
 
@@ -239,6 +242,7 @@ Donate, or just say thanks!
 ## 💡 Advanced Features
 
 - **System Service** - Auto-start at boot with `./install_service.sh` (Linux)
+- **Aitum Multi-Canvas** - Controls horizontal and vertical canvas scenes together
 - **Remote Monitoring** - Monitor OBS over your local network
 - **Multiple Sources** - Control multiple show/hide sources simultaneously
 - **Adjustable Sensitivity** - Tune detection for your lighting and setup
